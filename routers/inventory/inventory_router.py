@@ -17,7 +17,7 @@ def get_all_inventory(db: Session = Depends(get_db)):
 
 @router.get("/{id}")
 def inventory_by_id(id: int, db: Session = Depends(get_db)):
-    return inventory_controller.read_inventory_by_id(db)
+    return inventory_controller.read_inventory_by_id(db, id)
 
 
 @router.post("/")
