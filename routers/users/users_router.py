@@ -4,13 +4,15 @@ from sqlalchemy.orm import Session
 from models.database import get_db
 from models.users.users_model import UserBase, UserDisplayBase
 
+from typing import List
+
 from routers.users import user_controller
 
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("/")
+@router.get("/",response_model=List[UserDisplayBase])
 def get_all_user(db: Session = Depends(get_db)):
     return user_controller.read_users(db)
 
