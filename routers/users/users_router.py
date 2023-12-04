@@ -9,15 +9,10 @@ from routers.users import user_controller
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-fake_user_db = [
-    {"username": "teeruch"},
-    {"username": "Chaiwat"},
-]
-
 
 @router.get("/")
-def get_all_user():
-    return fake_user_db
+def get_all_user(db: Session = Depends(get_db)):
+    return user_controller.read_users(db)
 
 @router.post("/")
 def register_user(request: UserBase, db: Session= Depends(get_db)):
