@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 
 class DbUser(Base):
-    __table__ = "users"
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True)
     password = Column(String)
@@ -23,7 +23,7 @@ class UserBase(BaseModel):
 
 class UserDisplayBase(BaseModel):
     id: int
-    user: str
+    username: str
 
     class Config:
         orm_mode = True
