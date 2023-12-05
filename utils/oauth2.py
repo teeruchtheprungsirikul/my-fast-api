@@ -12,14 +12,15 @@ ALGORITHM = config("ALGORITHM")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 def create_access_token(data: dict, expire_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     expire = generate_expire_date(expire_delta)
     to_encode.update({"exp": expire})
     encode_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encode_jwt
-    
-    
+
+
 def generate_expire_date(expire_delta: Optional[timedelta] = None):
     if expire_delta:
         expire = datetime.utcnow() + expire_delta
@@ -34,13 +35,13 @@ def access_user_token(token: str = Depends(oauth2_scheme)):
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception()
-    
+
     except JWTError:
         raise credentials_exception()
-    
+
 
 def credentials_exception():
     return HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials"
+        detail="Could not validate credentials",
     )
