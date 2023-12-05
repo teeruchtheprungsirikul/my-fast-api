@@ -26,3 +26,21 @@ def generate_expire_date(expire_delta: Optional[timedelta] = None):
     else:
         expire = datetime.utcnow() + timedelta(days=1)
     return expire
+
+
+def access_user_token(token: str = Depends(oauth2_scheme)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception()
+    
+    except JWTError:
+        raise credentials_exception()
+    
+
+def credentials_exception():
+    return HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials"
+    )
