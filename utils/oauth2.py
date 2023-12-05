@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 from typing import Optional
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2AuthorizationCodeBearer
+from fastapi.security import OAuth2PasswordBearer
 
 from jose import JWTError, jwt
 from decouple import config
@@ -10,7 +10,7 @@ from decouple import config
 SECRET_KEY = config("SECRET_KEY")
 ALGORITHM = config("ALGORITHM")
 
-oauth2_scheme = OAuth2AuthorizationCodeBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def create_access_token(data: dict, expire_delta: Optional[timedelta] = None):
     to_encode = data.copy()
