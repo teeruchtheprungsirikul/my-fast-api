@@ -41,7 +41,7 @@ def access_user_token(token: str = Depends(oauth2_scheme)):
 
 
 def credentials_exception():
-    return HTTPException(
+    raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
     )
