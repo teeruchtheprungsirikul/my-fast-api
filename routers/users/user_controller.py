@@ -8,6 +8,11 @@ from utils.hash import Hash
 
 
 def create(db: Session, request: UserBase):
+    # Recheck user exist
+    user = db.query(DbUser).filter(DbUser.username == request.username)
+    if user.first():
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+    
     new_user = DbUser(username=request.username, password=Hash.bcrypt(request.password))
     db.add(new_user)
     db.commit()
