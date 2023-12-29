@@ -12,7 +12,7 @@ class DbInventory(Base):
     __tablename__ = "inventory"
     id = Column(Integer, primary_key=True, index=True)
     description = Column(String)
-    price = Column(DECIMAL)
+    price = Column(Integer)
     stock = Column(Integer)
     created_date = Column(DateTime(timezone=True), server_default=func.now())
     updated_date = Column(
@@ -22,14 +22,14 @@ class DbInventory(Base):
 
 class InventoryBase(BaseModel):
     description: str
-    price: Decimal
+    price: int
     stock: int
 
 
 class InventoryDisplayBase(BaseModel):
     id: int
     description: str
-    price: Decimal
+    price: int
     stock: int
     created_date: datetime
     updated_date: datetime
