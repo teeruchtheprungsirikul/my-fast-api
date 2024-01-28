@@ -22,14 +22,14 @@ class DbInventory(Base):
 
 class InventoryBase(BaseModel):
     description: str
-    price: int
+    price: float
     stock: int
 
 
 class InventoryDisplayBase(BaseModel):
     id: int
     description: str
-    price: int
+    price: float
     stock: int
     created_date: datetime
     updated_date: datetime

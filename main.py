@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from models.database import engine
 from models.inventory import inventory_model
@@ -14,9 +15,13 @@ app.include_router(inventory_router.router)
 app.include_router(users_router.router)
 
 
+# @app.get("/")
+# def hello():
+#     return {"Hello": "FastAPI"}
+
 @app.get("/")
-def hello():
-    return {"Hello": "FastAPI"}
+async def main():
+    return RedirectResponse(url="/docs")
 
 
 inventory_model.Base.metadata.create_all(engine)
